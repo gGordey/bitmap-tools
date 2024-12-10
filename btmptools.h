@@ -18,12 +18,14 @@ namespace btmptools
         unsigned width;
         std::byte channels;
     };
-    // converts X and Y coord to an index
-    auto bitmap_point(bitmap& btmp, auto X, auto Y) { return (X + Y * btmp.width) * btmp.channels; }
+    // converts X and Y coord to a vector with all color channels at this pixel
+    [[nodiscard]] vector<std::byte> bitmap_point(bitmap& btmp, int X, int Y);
     // creates empty bitmap with four color chanals per pixel
-    [[nodiscard]] bitmap* new_RGBA_bitamp(auto pixel_number, auto w);
-    // 8 bit bitmap 3 chanals per pixel
-    [[nodiscard]] bitmap* new_RGB_bitamp(auto pixel_number, auto w);
-};
+    [[nodiscard]] bitmap new_multichannel_bitamp(unsigned pixel_number, unsigned w, unsigned channels);
+    // fully fills all the pixels in one channel with given value 
+    void fill_bitmap(btmptools::bitmap& bitmap, std::byte value, std::byte channel);
+    // printing bitmap
+    void print_bitmap(btmptools::bitmap& bitmap);
+}
 
 #endif // _BTMP_TOOLS_
